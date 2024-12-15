@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div id="orderedItemsContainer">
+        <h1 class="heading mt-4">Your Ordered Items</h1>
+        <ul id="unorderele"></ul>
+    </div>
+  </body>
+</html>
+<style>
+    .heading
+{
+    font-size:400;
+    font-size:28px;
+    text-align:center;
+}
+.liststyletype
+{
+    list-style-type:none;
+    padding:10px;
+}
+
+</style>
+
+
+<script>
+    let itemList = [
+  {
+    itemName: "Veg Biryani",
+    uniqueNo: 1,
+  },
+  {
+    itemName: "Chicken 65",
+    uniqueNo: 2,
+  },
+  {
+    itemName: "Paratha",
+    uniqueNo: 3,
+  }
+];
+let unorderEle=document.getElementById("unorderele");
+function onDeleteItem(itemid)
+{
+    let listEle=document.getElementById(itemid);
+    unorderEle.removeChild(listEle);
+}
+function orderedItems(item)
+{
+    let itemid="item"+item.uniqueNo;
+    let buttonid="button"+item.uniqueNo;
+
+    let listEle=document.createElement("li");
+    listEle.classList.add("liststyletype");
+    listEle.id=itemid;
+    listEle.textContent=item.itemName;
+    unorderEle.appendChild(listEle);
+    
+    let buttonEle=document.createElement("button");
+    buttonEle.classList.add("btn","btn-danger","ml-4");
+    buttonEle.id=buttonid;
+    buttonEle.textContent="Cancel";
+    buttonEle.onclick=function()
+    {
+        onDeleteItem(itemid);
+    }
+    listEle.appendChild(buttonEle);
+}
+for(let item of itemList)
+{
+    orderedItems(item);
+}
+</script>

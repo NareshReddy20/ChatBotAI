@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style> 
+
+ .timer-container {
+   background-color: #00bafc;
+   padding: 20px;
+   text-align: center;
+   height: 100vh;
+ }
+  
+ .timer-display {
+   font-size: 50px;
+   color: white;
+ }
+  
+ .user-input {
+   border-width: 0px;
+   border-radius: 4px;
+   padding: 6px;
+   text-align: center;
+ }
+  
+ .bomb-image {
+   margin-top: 40px;
+   width: 150px;
+ }
+    </style>
+</head>
+<body>
+<!-- <!--    
+     <button id="greenBtn">GreenBtn</button>
+    <p><span id="spanId"></span></p> -->
+ 
+     <div class="timer-container">
+      <input type="text" class="user-input" id="defuser" />
+      <br />
+      <img
+        src="https://d1tgh8fmlzexmh.cloudfront.net/ccbp-dynamic-webapps/time-bomb-img.png"
+        class="bomb-image"
+      />
+      <p class="timer-display" id="timer">10</p>
+    </div> 
+  </body>
+</html>
+    <script src="eventlisteners.js"></script>
+
+ <!-- <script>
+let inputElement=document.createElement("input");
+function printKeyDown(event){
+    console.log("key pressed");
+    console.log(event.type);
+     console.log(event.key);
+     console.log(event.target);
+}
+inputElement.addEventListener("keydown",printKeyDown);
+
+inputElement.addEventListener("keyup",printKeyDown);
+document.body.appendChild(inputElement);
+</script>  -->
+
+
+<script>
+    let timerEle=document.getElementById("timer");
+    let countdown=10;
+    let intervalId=setInterval(function(){
+        countdown--;
+        timerEle.textContent=countdown;
+       if(countdown===0){
+        timerEle.textContent="BOOM!";
+        timerEle.style.color="red";
+        clearInterval(intervalId);
+       }
+    },1000);
+
+    let defuserEle=document.getElementById("defuser");
+    defuserEle.addEventListener("keyup",function(event){
+        let bombDefuserValue=defuserEle.value;
+        if(bombDefuserValue==="defuse"&&event.key==="Enter"&&countdown!==0)
+        {
+            timerEle.textContent="Yahoo You did it!";
+            timerEle.style.color="green";
+            clearInterval(intervalId);
+        } 
+    })
+</script>

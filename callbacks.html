@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <button id="setIntervalId">Set Interval</button>
+    <button id="clearIntervalId">Clear Interval</button>
+    <div style="background-color: aquamarine;">
+        <p>Count Value :<span id="setid"></span></p>
+    </div>
+</body>
+</html>
+<script>
+let setIntervalEle=document.getElementById("setIntervalId");
+let clearIntervalEle=document.getElementById("clearIntervalId");
+let displayEle=document.getElementById("setid");
+let uniqueId=null;
+setIntervalEle.onclick=function(){
+    let counter=0;
+    uniqueId=setInterval(function(){
+        console.log(counter);
+        counter=counter+1;
+        displayEle.textContent=counter;
+    },1000);
+}
+clearIntervalEle.onclick=function(){
+    clearInterval(uniqueId);
+    displayEle.textContent="Interval cleared";  // This line will not be executed as interval is cleared using clearInterval function. Instead, it will be logged to console.  // This line is just for demonstration purpose.
+    console.log("Interval cleared");
+};
+</script>

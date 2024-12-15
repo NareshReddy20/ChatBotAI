@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/5f59ca6ad3.js" crossorigin="anonymous"></script>
+    <style>
+.form-heading {
+  padding-top: 40px;
+  padding-bottom: 20px;
+  font-family: "Roboto";
+  font-size: 36px;
+}
+
+.errorMessage {
+  font-family: "Roboto";
+  font-size: 14px;
+  color: #dc3545;
+}
+    </style>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <h1 class="form-heading">Add User</h1>
+        <form id="myForm">
+          <div class="mb-3">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name">
+            <p class="errorMessage" id="nameErrMsg"></p>
+          </div>
+          <div class="mb-3">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email">
+            <p class="errorMessage" id="emailErrMsg"></p>
+          </div>
+
+          <div class="mb-3">
+            <label for="status">Working Status</label>
+            <select id="status" class="form-control">
+                 <option value="Active" selected>Active</option>
+                 <option value="Inactive">Inactive</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <h1 style="font-size:20px">Gender</h1>
+            <input type="radio" id="genderMale" value="Male" name="gender" checked/>
+            <label for="genderMale">Male</label>
+            <input type="radio" id="genderFemale" value="Female" class="ml-2" name="gender">
+            <label for="genderFemale">Female</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
+
+<script>
+  let formData={
+    name:"",
+    email:"",
+    status:"Active",
+    gender:"Male"
+}
+
+let workingStatusEle=document.getElementById("status");
+workingStatusEle.addEventListener("change",function(event){
+   formData.status=event.target.value;
+});
+
+
+let genderMaleEle=document.getElementById("genderMale");
+genderMaleEle.addEventListener("change",function(event){
+   formData.gender=event.target.value;
+});
+
+let genderFemaleEle=document.getElementById("genderFemale");
+genderFemaleEle.addEventListener("change",function(event){
+   formData.gender=event.target.value;
+});
+
+let myFormEle=document.getElementById("myForm");
+
+myFormEle.addEventListener("submit",function(event)
+{
+  event.preventDefault();
+})
+let nameEle=document.getElementById("name");
+let nameErrMsgEle=document.getElementById("nameErrMsg");
+nameEle.addEventListener("change",function(event)
+{
+  if(event.target.value === "")
+{
+    nameErrMsgEle.textContent="required*";
+}
+else{
+    nameErrMsgEle.textContent="";
+}
+formData.name=event.target.value;
+});
+
+
+let emailEle=document.getElementById("email");
+let emailErrMsgEle=document.getElementById("emailErrMsg");
+emailEle.addEventListener("change",function(event)
+{
+  if(event.target.value === "")
+{
+    emailErrMsgEle.textContent="required*";
+}
+else{
+    emailErrMsgEle.textContent="";
+}
+formData.email=event.target.value;
+});
+
+function submitFormData(formData) {
+  let options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization:
+        "Bearer 00f3f8fde06120db02b587cc372c3d85510896e899b45774068bb750462acd9f",
+    },
+    body: JSON.stringify(formData)
+  };
+
+  let url = "https://gorest.co.in/public-api/users";
+
+  fetch(url, options)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(jsonData) {
+      console.log(jsonData);
+      if (jsonData.code === 422) {
+        if (jsonData.data[0].message === "has already been taken") {
+          emailErrMsgEl.textContent = "Email Already Exists";
+        }
+      }
+    });
+}
+
+myFormEle.addEventListener("change",function(event){
+  event.preventDefault();
+  submitFormData(formData);
+});
+
+
+</script>
+
+
+
+

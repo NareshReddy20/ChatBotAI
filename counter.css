@@ -1,0 +1,24 @@
+.heading-counter
+{
+    font-weight:bold;
+}
+.count-number
+{
+    font-size:45px;
+    font-weight:bold;
+}
+.button{
+    border-radius:7px;
+    margin-right:10px;
+}
+
+
+.header
+{   
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    height:100vh;
+    background-color: #f1f5f8;
+}
